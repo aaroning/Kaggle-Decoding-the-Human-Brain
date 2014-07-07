@@ -62,8 +62,8 @@ def getAccuracyForAllModelsJackknife():
         print accuracy_score(yy, y_pred)
         
 def main():
-    data = loadData(1)
-    categorize_trial(data, 5)
+    XX, yy = get_features_consecutive_channels_all_users(subjects_train)
+    categorize_trial(XX, yy, 16)
 
 main()
     

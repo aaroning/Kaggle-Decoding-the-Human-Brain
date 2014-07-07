@@ -26,29 +26,16 @@ def categorize_timeseries(data):
     print categories
     
     
-def categorize_trial(data, num_clusters):
-    XX = data['X']
-    yy = data['y']
-    
-    XX = XX.reshape(XX.shape[0], XX.shape[1] * XX.shape[2])
-    XX -= XX.mean(0)
-    XX = np.nan_to_num(XX / XX.std(0))
-
+def categorize_trial(XX, yy, num_clusters):
+    print "XX shape " + str(XX.shape)
+    print "yy shape " + str(yy.shape)
     categorizer = KMeans(n_clusters=num_clusters)
     categorizer.fit(XX)
     categories = categorizer.predict(XX)
-    print "Categories is "
-    print categories
-    print "yy is "
-    print yy 
-    categories_range = range(0, 1) 
+    categories_range = range(0, num_clusters) 
     for cluster in categories_range:
         print "number of trials in category " + str(cluster)
         print np.sum(categories ==  cluster)
         print "ratio of positives for category " + str(cluster)
         ratio_vector = np.logical_and((categories == cluster), (yy == 1))
-        print ratio_vector
-        print ratio_vector.sum(0)
-        print "categories size "
-        print categories.size
-        print (ratio_vector.sum(0) / categories.size)
+        print (float(ratio_vector.sum(0)) / np.sum(categories ==  cluster))

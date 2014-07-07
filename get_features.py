@@ -38,3 +38,21 @@ def getFeaturesFromDataConsecutiveChannelsJackknife(subjects_train, jacknifed_su
             else:
                 yy_result = np.concatenate((yy_result, yy))
     return (XX_result, yy_result)
+
+def get_features_consecutive_channels_all_users(subjects_train):
+    """Get the features from the data. Within each trial, each time unit for every node is a different feature.
+    Append all features together for all users"""
+    XX_result = None
+    yy_result = None
+    for subject in subjects_train:
+        data = loadData(subject)
+        XX, yy = getFeaturesFromDataConsecutiveChannels(data)
+        if XX_result is None:
+            XX_result = XX
+        else:
+            XX_result = np.concatenate((XX_result, XX))
+        if yy_result is None:
+            yy_result = yy
+        else:
+            yy_result = np.concatenate((yy_result, yy))
+    return (XX_result, yy_result)
