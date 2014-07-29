@@ -34,8 +34,14 @@ def categorize_trial(XX, yy, num_clusters):
     categories = categorizer.predict(XX)
     categories_range = range(0, num_clusters) 
     for cluster in categories_range:
-        print "number of trials in category " + str(cluster)
-        print np.sum(categories ==  cluster)
-        print "ratio of positives for category " + str(cluster)
-        ratio_vector = np.logical_and((categories == cluster), (yy == 1))
-        print (float(ratio_vector.sum(0)) / np.sum(categories ==  cluster))
+        print "number of trials in category " + str(cluster) + " is " + str(np.sum(categories ==  cluster))
+        #print "ratio of positives for category " + str(cluster)
+        #ratio_vector = np.logical_and((categories == cluster), (yy == 1))
+        #print (float(ratio_vector.sum(0)) / np.sum(categories ==  cluster))
+    filename_clusters = str(num_clusters) + "clusters.csv"
+    print "Creating clusters file", filename_clusters
+    f = open(filename_clusters, "w")
+    print >> f, "cluster"
+    for i in range(len(categories)):
+        print >> f, str(categories[i])
+    print "Finished clusters file", filename_clusters
